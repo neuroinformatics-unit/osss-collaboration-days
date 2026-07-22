@@ -1,4 +1,5 @@
 During [OSSS 2026](https://neuroinformatics.dev/open-software-summer-school/index.html), we will run collaboration days on the Thursday and Friday of weeks 1 and 2.  
+
 This will involve self-organising into small groups and tackling a project of interest hands-on and together, in a fun atmosphere.
 
 This repository can be used to propose ideas for collaboration day projects. Project ideas can be added as GitHub issues by clicking "Issues" > "New Issue" > "Hackday project idea". 
