@@ -1,7 +1,7 @@
 During [OSSS 2026](https://neuroinformatics.dev/open-software-summer-school/index.html), we will run a collaborative hackday on the Thursday and Friday of weeks 1 and 2.  
 This will involve self-organising into small groups and tackling a project of interest hands-on and together, in a fun atmosphere.
 
-This repository can be used to propose ideas for collaboration day projects. Project ideas can be added as GitHub issues by clicking 'Issues' > “New Issue” > “Hackday project idea”. Please add [Week 1] or [Week 2] to the title
+This repository can be used to propose ideas for collaboration day projects. Project ideas can be added as GitHub issues by clicking "Issues" > "New Issue" > "Hackday project idea". Please add [Week 1] or [Week 2] to the title
 depending on whether you are proposing the idea to work on in the first week (20th, 21st) or second week (27th, 28th).
 
 You can browse existing proposals on this board. If something catches your eye, feel free to leave a comment under the relevant issue to express your interest or ask questions. 
