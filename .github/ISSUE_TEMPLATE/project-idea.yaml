@@ -2,6 +2,17 @@ name: Project idea
 description: submit a collaborative project idea
 projects: neuroinformatics-unit/21
 body:
+  - type: dropdown
+    id: week
+    attributes:
+      label: Which summer school week is this for?
+      description: Select whether you are proposing this for Week 1, Week 2, or both.
+      options:
+        - Week 1 (20th, 21st)
+        - Week 2 (27th, 28th)
+        - Week 1 and Week 2
+    validations:
+      required: true
   - type: textarea
     id: description
     attributes:
