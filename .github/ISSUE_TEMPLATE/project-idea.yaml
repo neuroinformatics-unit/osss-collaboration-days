@@ -1,12 +1,12 @@
-name: Hackday project idea
-description: submit a hackday project idea
-projects: neuroinformatics-unit/19
+name: Project idea
+description: submit a collaborative project idea
+projects: neuroinformatics-unit/21
 body:
   - type: textarea
     id: description
     attributes:
       label: Idea description
-      description: Include what the outcome of the hackday could be (a prototype? A polished write-up of an idea?). Make sure to link to relevant resources, and check that the idea doesn't exist yet. You can see all proposed ideas on [this project board](https://github.com/orgs/neuroinformatics-unit/projects/19/views/1).
+      description: Include what the outcome of the collaboration could be (a prototype? A polished write-up of an idea?). Make sure to link to relevant resources, and check that the idea doesn't exist yet. You can see all proposed ideas on [this project board](https://github.com/orgs/neuroinformatics-unit/projects/21/views/1).
       placeholder: 1-2 paragraphs suggested.         
   - type: textarea
     id: skills
