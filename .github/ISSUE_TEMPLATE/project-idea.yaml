@@ -1,0 +1,34 @@
+name: Project idea
+description: submit a collaborative project idea
+projects: neuroinformatics-unit/21
+body:
+  - type: dropdown
+    id: week
+    attributes:
+      label: Which summer school week is this for?
+      description: Select whether you are proposing this for Week 1, Week 2, or both.
+      options:
+        - Week 1 (20th, 21st)
+        - Week 2 (27th, 28th)
+        - Week 1 and Week 2
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: Idea description
+      description: Include what the outcome of the collaboration could be (a prototype? A polished write-up of an idea?). Make sure to link to relevant resources, and check that the idea doesn't exist yet. You can see all proposed ideas on [this project board](https://github.com/orgs/neuroinformatics-unit/projects/21/views/1).
+      placeholder: 1-2 paragraphs suggested.         
+  - type: textarea
+    id: skills
+    attributes:
+      label: What skills are needed to tackle the project
+      description: Explain what skills (like writing/design skills, knowledge about a topic or a technology) would help tackle your project.
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Would you be willing to lead this project?
+      description: Tick this box if you would be willing to take on this project - alternatively, you can also submit this idea just as is!
+      options:
+        - label: Yes!
+          required: false

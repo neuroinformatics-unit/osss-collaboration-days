@@ -1,0 +1,129 @@
+name: Label project week from issue form
+
+on:
+  issues:
+    types: [opened, edited, reopened]
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  apply-week-label:
+    if: github.event.issue.pull_request == null
+    runs-on: ubuntu-latest
+    steps:
+      - name: Apply matching week label
+        uses: actions/github-script@v9
+        with:
+          script: |
+            const issue = context.payload.issue;
+            const body = issue.body || "";
+
+            const heading = /###\s*Which summer school week is this for\?/i;
+            const lines = body.split(/\r?\n/);
+
+            let selectedWeek = null;
+            for (let i = 0; i < lines.length; i++) {
+              if (heading.test(lines[i])) {
+                for (let j = i + 1; j < lines.length; j++) {
+                  const candidate = lines[j].trim();
+                  if (!candidate) continue;
+                  if (candidate.startsWith("### ")) break;
+                  selectedWeek = candidate;
+                  break;
+                }
+                break;
+              }
+            }
+
+            const weekToLabel = {
+              "Week 1 (20th, 21st)": "Week 1",
+              "Week 2 (27th, 28th)": "Week 2",
+              "Week 1 and Week 2": "Week 1 & 2",
+            };
+
+            const weekLabels = ["Week 1", "Week 2", "Week 1 & 2"];
+            const existingLabels = issue.labels.map((l) => l.name);
+            const targetLabel = weekToLabel[selectedWeek || ""];
+
+            if (!targetLabel) {
+              const staleWeekLabels = weekLabels.filter((name) => existingLabels.includes(name));
+              for (const labelName of staleWeekLabels) {
+                await github.rest.issues.removeLabel({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: issue.number,
+                  name: labelName,
+                });
+              }
+              core.warning(
+                "No recognized week selection found in issue body. Removed existing week labels to avoid stale metadata."
+              );
+              return;
+            }
+
+            const labelDefinitions = {
+              "Week 1": {
+                color: "1f6feb",
+                description: "Proposed for collaboration week 1",
+              },
+              "Week 2": {
+                color: "0e8a16",
+                description: "Proposed for collaboration week 2",
+              },
+              "Week 1 & 2": {
+                color: "5319e7",
+                description: "Proposed for both collaboration weeks",
+              },
+            };
+
+            for (const labelName of weekLabels) {
+              const definition = labelDefinitions[labelName];
+              try {
+                await github.rest.issues.createLabel({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  name: labelName,
+                  color: definition.color,
+                  description: definition.description,
+                });
+              } catch (error) {
+                if (error.status === 422) {
+                  await github.rest.issues.updateLabel({
+                    owner: context.repo.owner,
+                    repo: context.repo.repo,
+                    name: labelName,
+                    new_name: labelName,
+                    color: definition.color,
+                    description: definition.description,
+                  });
+                } else {
+                  throw error;
+                }
+              }
+            }
+
+            const labelsToRemove = weekLabels.filter(
+              (name) => name !== targetLabel && existingLabels.includes(name)
+            );
+
+            for (const labelName of labelsToRemove) {
+              await github.rest.issues.removeLabel({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issue.number,
+                name: labelName,
+              });
+            }
+
+            if (!existingLabels.includes(targetLabel)) {
+              await github.rest.issues.addLabels({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issue.number,
+                labels: [targetLabel],
+              });
+            }
+
+            core.info(`Applied week label: ${targetLabel}`);
